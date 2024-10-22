@@ -1,6 +1,6 @@
-@ProblemDetails_HostAddress = http://localhost:5028
+@HostAddress = http://localhost:5028
 
-GET {{ProblemDetails_HostAddress}}/weatherforecast/
+GET {{HostAddress}}/todos/42
 Accept: application/json
 
 ###
