@@ -1,6 +1,6 @@
-@issue_58832_HostAddress = http://localhost:5236
+@HostAddress = http://localhost:5236
 
-GET {{issue_58832_HostAddress}}/weatherforecast/
+GET {{HostAddress}}/pets/
 Accept: application/json
 
 ###
