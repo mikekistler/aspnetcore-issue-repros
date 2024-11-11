@@ -1,0 +1,39 @@
+{
+  "definitions": {
+    "Address": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "number"
+        }
+      }
+    },
+    "Address2": {
+      "type": "object",
+      "properties": {
+        "street": {
+          "type": "string"
+        },
+        "number": {
+          "type": "number"
+        }
+      },
+      "nullable": true
+    }
+  },
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "myAddress": {
+      "$ref": "#/definitions/Address"
+    },
+    "myAltAddress": {
+      "$ref": "#/definitions/Address2"
+    }
+  }
+}

@@ -9,3 +9,8 @@ GET {{issue_58617_HostAddress}}/Test2
 Accept: application/json
 
 ###
+
+GET {{issue_58617_HostAddress}}/Test3
+Accept: application/json
+
+###

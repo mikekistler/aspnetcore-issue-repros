@@ -1,0 +1,11 @@
+{
+  "name": "Mr. Magoo",
+  "myAddress": {
+    "street": "main",
+    "number": 32
+  },
+  "myAltAddress": {
+    "street": "main",
+    "number": 32
+  }
+}

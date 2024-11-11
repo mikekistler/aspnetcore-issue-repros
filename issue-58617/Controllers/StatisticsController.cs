@@ -17,7 +17,7 @@ public class StatisticsController : ControllerBase
     [HttpGet("Test2")]
     public TestDto? Test2()
     {
-        return null;
+        return default;
     }
 
     // TestDto corresponds to component schema "TestDto" (with nullable: false)

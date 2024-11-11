@@ -1,6 +1,36 @@
-@Minimal_58617_HostAddress = http://localhost:5054
+@HostAddress = http://localhost:5054
 
-GET {{Minimal_58617_HostAddress}}/weatherforecast/
+GET {{HostAddress}}/Test
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/Test2
+Accept: application/json
+
+###
+
+POST {{HostAddress}}/Test2
+Accept: application/json
+Content-Type: application/json
+
+{
+  "x": "Test"
+}
+
+###
+
+POST {{HostAddress}}/Test2
+Accept: application/json
+
+###
+
+PUT {{HostAddress}}/Test2
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/Test3
 Accept: application/json
 
 ###

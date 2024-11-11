@@ -4,3 +4,18 @@ GET {{HostAddress}}/pets/
 Accept: application/json
 
 ###
+
+GET {{HostAddress}}/pets/cat
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/pets/dog
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/pets/pooch
+Accept: application/json
+
+###
