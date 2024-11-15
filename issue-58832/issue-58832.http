@@ -1,21 +1,31 @@
 @HostAddress = http://localhost:5236
 
-GET {{HostAddress}}/pets/
+GET {{HostAddress}}/pets/mizzy
 Accept: application/json
 
 ###
 
-GET {{HostAddress}}/pets/cat
+GET {{HostAddress}}/pets/mizzy2
 Accept: application/json
 
 ###
 
-GET {{HostAddress}}/pets/dog
+GET {{HostAddress}}/pets/mizzy3
 Accept: application/json
 
 ###
 
-GET {{HostAddress}}/pets/pooch
+GET {{HostAddress}}/pets/fido
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/pets/lassie
+Accept: application/json
+
+###
+
+GET {{HostAddress}}/pets/snoopy
 Accept: application/json
 
 ###

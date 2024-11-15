@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 
@@ -5,39 +6,49 @@ using System.Text.Json.Serialization;
 [Route("/pets")]
 public class PetsController : ControllerBase
 {
-    // This doesn't work - the response body object does not contain the $type property
-    [HttpGet]
-    public ActionResult<BaseModel> Get()
-    {
-        Cat cat = new Cat() { CatName = "Mizzy" };
-        return Ok(cat);
-    }
-
     // This works - the response body object contains the $type property
-    [HttpGet("cat")]
-    public ActionResult<BaseModel> GetCat()
+    [HttpGet("mizzy")]
+    public ActionResult<BaseModel> GetMizzy()
     {
-        Cat cat = new Cat() { CatName = "Mizzy" };
-        return cat;
+        return new Cat() { CatName = "Mizzy" };
     }
 
     // This doesn't work - the response body object does not contain the $type property
-    [HttpGet("dog")]
-    public ActionResult<BaseModel> GetDog()
+    [HttpGet("mizzy2")]
+    public ActionResult<BaseModel> GetMizzy2()
     {
-        Dog dog = new Dog() { DogName = "Fido" };
-        var result = Ok(dog);
-        result.DeclaredType = typeof(Dog);
+        return Ok(new Cat() { CatName = "Mizzy" });
+    }
+
+    // Also doesn't work
+    [HttpGet("mizzy3")]
+    public ActionResult<BaseModel> GetMizzy3()
+    {
+        return Ok(new Cat() { CatName = "Mizzy" } as BaseModel);
+    }
+
+    // This works!
+    [HttpGet("fido")]
+    public ActionResult<BaseModel> GetFido()
+    {
+        var result = Ok(new Dog() { DogName = "Fido" });
+        result.DeclaredType = typeof(BaseModel);
         return result;
     }
 
-    // This doesn't work - the response body object does not contain the $type property
-    [HttpGet("pooch")]
-    public ActionResult<Dog> GetPooch()
+    // This alsom works!
+    [HttpGet("lassie")]
+    public Ok<BaseModel> GetLassie()
     {
-        Dog dog = new Dog() { DogName = "Fido" };
-        var result = new ActionResult<Dog>(dog);
-        return result;
+        BaseModel dog = new Dog() { DogName = "Lassie" };
+        return TypedResults.Ok(dog);
+    }
+
+    // This alsom works!
+    [HttpGet("snoopy")]
+    public Ok<BaseModel> GetSnoopy()
+    {
+        return TypedResults.Ok(new Dog() { DogName = "Snoopy" } as BaseModel);
     }
 }
 
