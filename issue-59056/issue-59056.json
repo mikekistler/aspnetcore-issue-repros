@@ -1,0 +1,159 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "issue-59056 | v1",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/test": {
+      "get": {
+        "tags": [
+          "issue-59056"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WeatherForecast"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/test2": {
+      "get": {
+        "tags": [
+          "issue-59056"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inner"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/command": {
+      "post": {
+        "tags": [
+          "issue-59056"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Command"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Command"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Command": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string",
+            "default": null
+          },
+          "namespace": {
+            "$ref": "#/components/schemas/ETagNamespace"
+          }
+        }
+      },
+      "ETagNamespace": {
+        "enum": [
+          "ContentWarning",
+          "Genre",
+          "Franchise"
+        ],
+        "default": null
+      },
+      "Inner": {
+        "type": "object",
+        "properties": {
+          "prop1": {
+            "type": "string"
+          },
+          "prop2": {
+            "type": "string"
+          }
+        }
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "weatherType": {
+            "$ref": "#/components/schemas/WeatherType"
+          },
+          "anotherWeatherType": {
+            "$ref": "#/components/schemas/WeatherType"
+          },
+          "inner": {
+            "$ref": "#/components/schemas/Inner"
+          },
+          "anotherInner": {
+            "$ref": "#/components/schemas/Inner"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "WeatherType": {
+        "enum": [
+          "Rain",
+          "Snow",
+          "Sun",
+          "Cloud"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "issue-59056"
+    }
+  ]
+}
