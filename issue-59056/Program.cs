@@ -1,8 +1,15 @@
+using System.Text.Json.Serialization;
+using Microsoft.OpenApi.Any;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+// builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddNullableTransformer();
+});
 
 var app = builder.Build();
 
@@ -14,28 +21,69 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
 
-app.MapGet("/weatherforecast", () =>
+app.MapGet("/test", () => TypedResults.Ok(new WeatherForecast
 {
-    var forecast =  Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast");
+    Date = new DateOnly(2021, 6, 1),
+    TemperatureC = 25,
+    WeatherType = WeatherType.Sun
+}));
+
+app.MapGet("/test2", () => TypedResults.Ok(new Inner
+{
+    Prop1 = "prop1",
+    Prop2 = "prop2"
+}));
+
+app.MapPost("/command", (Command body) =>
+{
+    return TypedResults.Ok(body);
+});
+
+// app.MapPost("/tag", (Tag body) =>
+// {
+//     return TypedResults.Ok(body);
+// });
 
 app.Run();
 
-record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
+[JsonConverter(typeof(JsonStringEnumConverter<WeatherType>))]
+enum WeatherType
 {
+    Rain,
+    Snow,
+    Sun,
+    Cloud
+}
+
+class WeatherForecast
+{
+    public DateOnly Date { get; set; }
+    public int TemperatureC { get; set; }
+    public WeatherType WeatherType { get; set; }
+    public WeatherType? AnotherWeatherType { get; set; }
+    public Inner Inner { get; set; }
+    public Inner? AnotherInner { get; set; }
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
+
+public struct Inner {
+    public string Prop1 { get; set; }
+    public string Prop2 { get; set; }
+}
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum ETagNamespace
+{
+	ContentWarning = 1,
+	Genre = 2,
+	Franchise = 3,
+}
+
+//public sealed record Command(string Name, string? Description, ETagNamespace? Namespace);
+
+// public sealed record Command(string Name, string? Description) {
+//     public ETagNamespace? Namespace { get; init; }
+// }
+
+public sealed record Command(string Name, string? Description = null, ETagNamespace? Namespace = null);

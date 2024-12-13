@@ -24,7 +24,7 @@
         "responses": {
           "200": {
             "description": "OK",
-            "content": {dotne
+            "content": {
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Todo"

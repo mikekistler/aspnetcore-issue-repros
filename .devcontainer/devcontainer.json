@@ -4,7 +4,12 @@
 	"name": "C# (.NET)",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
     "build": {
-        "dockerfile": "Dockerfile"
+        "dockerfile": "Dockerfile",
+		"args": {
+			// Set 'VARIANT' to pick a .NET Core version: 8.0
+			// Append -bullseye or -focal to pin to an OS version.
+			"VARIANT": "1-8.0"
+		}
 	},
 	"customizations": {
 		"vscode": {
