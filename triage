@@ -1,0 +1,35 @@
+#!/bin/zsh
+
+n=$1
+
+if [ -z "$n" ]; then
+    echo "Usage: triage <issue number>"
+    exit 1
+fi
+
+gh --repo https://github.com/dotnet/aspnetcore issue view --web $n
+
+# If the view failed, exit
+if [ $? -ne 0 ]; then
+    echo "View for $n failed"
+    exit 1
+fi
+
+dotnet new webapi -o issue-$n
+dotnet sln aspnetcore-issue-repros.sln add issue-$n/issue-$n.csproj
+
+push issue-$n
+find . -type f | grep -v 'obj/' | grep -v 'bin/' | grep -v .git | while read f; do sed -i '' 's/\r//' $f; done
+pop
+
+git add issue-$n aspnetcore-issue-repros.sln
+
+git commit -m "New webapi for issue $n repro"
+
+url=$(gh --repo https://github.com/dotnet/aspnetcore issue view $n --json url -q '.url')
+
+{
+    # AppleScript swallows the newlines so we need to use html breaks
+    echo "<br/>$url<br/>"
+    # More stuff to be added here
+} | osascript ~/bin/open-note.scpt $n "ASP.NET//Triage" 3<&0
