@@ -1,3 +1,7 @@
+using System.Text.Json;
+using System.Text.Json.Schema;
+using System.Text.Json.Serialization;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -33,9 +37,23 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
+app.MapGet("/schema", () =>
+{
+    var options = new JsonSerializerOptions(JsonSerializerOptions.Web);
+    var schema = options.GetJsonSchemaAsNode(typeof(WeatherForecast));
+    return schema;
+});
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
 {
+
+    [JsonNumberHandling(JsonNumberHandling.AllowReadingFromString|JsonNumberHandling.WriteAsString)]
+    public int TemperatureC { get; init; } = TemperatureC;
+
+    [JsonNumberHandling(JsonNumberHandling.Strict)]
+    public int StrictTemp { get; init; } = TemperatureC;
+
     public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
 }
