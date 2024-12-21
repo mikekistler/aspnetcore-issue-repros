@@ -71,6 +71,64 @@
           }
         }
       }
+    },
+    "/update-status": {
+      "post": {
+        "tags": [
+          "issue-59056"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateStatus"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateStatus"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/update-entity": {
+      "post": {
+        "tags": [
+          "issue-59056"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateEntity"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UpdateEntity"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -85,8 +143,7 @@
             "type": "string"
           },
           "description": {
-            "type": "string",
-            "default": null
+            "type": "string"
           },
           "namespace": {
             "$ref": "#/components/schemas/ETagNamespace"
@@ -98,8 +155,7 @@
           "ContentWarning",
           "Genre",
           "Franchise"
-        ],
-        "default": null
+        ]
       },
       "Inner": {
         "type": "object",
@@ -109,6 +165,47 @@
           },
           "prop2": {
             "type": "string"
+          }
+        }
+      },
+      "StatusEnum": {
+        "enum": [
+          "Active",
+          "Inactive"
+        ]
+      },
+      "UpdateEntity": {
+        "required": [
+          "myId",
+          "description"
+        ],
+        "type": "object",
+        "properties": {
+          "myId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "type": "string"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusEnum"
+          }
+        }
+      },
+      "UpdateStatus": {
+        "required": [
+          "myId",
+          "status"
+        ],
+        "type": "object",
+        "properties": {
+          "myId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "status": {
+            "$ref": "#/components/schemas/StatusEnum"
           }
         }
       },

@@ -40,10 +40,15 @@ app.MapPost("/command", (Command body) =>
     return TypedResults.Ok(body);
 });
 
-// app.MapPost("/tag", (Tag body) =>
-// {
-//     return TypedResults.Ok(body);
-// });
+app.MapPost("/update-status", (UpdateStatus body) =>
+{
+    return TypedResults.Ok(body);
+});
+
+app.MapPost("/update-entity", (UpdateEntity body) =>
+{
+    return TypedResults.Ok(body);
+});
 
 app.Run();
 
@@ -87,3 +92,13 @@ public enum ETagNamespace
 // }
 
 public sealed record Command(string Name, string? Description = null, ETagNamespace? Namespace = null);
+
+[JsonConverter(typeof(JsonStringEnumConverter))]
+public enum StatusEnum
+{
+    Active,
+    Inactive
+}
+
+record UpdateStatus(int MyId, StatusEnum Status);
+record UpdateEntity(int MyId, string Description, StatusEnum? Status = null);
