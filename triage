@@ -18,9 +18,9 @@ fi
 dotnet new webapi -o issue-$n
 dotnet sln aspnetcore-issue-repros.sln add issue-$n/issue-$n.csproj
 
-push issue-$n
+pushd issue-$n
 find . -type f | grep -v 'obj/' | grep -v 'bin/' | grep -v .git | while read f; do sed -i '' 's/\r//' $f; done
-pop
+popd
 
 git add issue-$n aspnetcore-issue-repros.sln
 
@@ -32,4 +32,4 @@ url=$(gh --repo https://github.com/dotnet/aspnetcore issue view $n --json url -q
     # AppleScript swallows the newlines so we need to use html breaks
     echo "<br/>$url<br/>"
     # More stuff to be added here
-} | osascript ~/bin/open-note.scpt $n "ASP.NET//Triage" 3<&0
+} | open-note "Issue $n" "ASP.NET//Triage" 3<&0
