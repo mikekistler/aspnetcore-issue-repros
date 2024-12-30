@@ -1,0 +1,73 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "issue-59616 | v1",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "issue-59616"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Foo"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Bar": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "format": "int32",
+            "x-foo": "bar"
+          }
+        },
+        "x-foo": "bar"
+      },
+      "Bar2": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "integer",
+            "format": "int32"
+          }
+        }
+      },
+      "Foo": {
+        "type": "object",
+        "properties": {
+          "bar": {
+            "$ref": "#/components/schemas/Bar"
+          },
+          "bars": {
+            "type": "object",
+            "additionalProperties": {
+              "$ref": "#/components/schemas/Bar2"
+            },
+            "x-foo": "bar"
+          }
+        },
+        "x-foo": "bar"
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "issue-59616"
+    }
+  ]
+}
